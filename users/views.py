@@ -8,27 +8,10 @@ from .forms import UserRegistrationForm
 import requests
 from django.conf import settings
 
-def login_view(request): # fin flow
+def login_view(request): # DO FLOW UPDATE
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
-        recaptcha_response = request.POST.get("recaptcha-token")  # Updated
-        # Verify reCAPTCHA
-        data = {
-            'secret': settings.RECAPTCHA_SECRET_KEY,
-            'response': recaptcha_response,
-            'remoteip': request.META.get('REMOTE_ADDR'),
-        }
-        recaptcha_verification = requests.post(
-            "https://www.google.com/recaptcha/api/siteverify",
-            data=data
-        )
-        result = recaptcha_verification.json()
-        # Check reCAPTCHA response
-        if not result.get("success"):
-            messages.error(request, "reCAPTCHA validation failed. Please try again.")
-            return redirect("users:login")  # Redirect back to the login page
-        # Authenticate user if reCAPTCHA is valid
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
