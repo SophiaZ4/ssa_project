@@ -41,7 +41,7 @@ def create_group(request):
         form = GroupCreationForm(user=request.user)
     return render(request, 'chipin/create_group.html', {'form': form})
 
-@login_required # added to --> UPDATE FLOW
+@login_required 
 def group_detail(request, group_id, edit_comment_id=None):
     group = get_object_or_404(Group, id=group_id)
     comments = group.comments.all().order_by('-created_at')  # Fetch all comments for the group

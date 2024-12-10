@@ -8,7 +8,7 @@ from .forms import UserRegistrationForm
 import requests
 from django.conf import settings
 
-def login_view(request): # DO FLOW UPDATE
+def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -22,7 +22,7 @@ def login_view(request): # DO FLOW UPDATE
             messages.error(request, "Invalid username or password.")
     return render(request, "users/login.html")
 
-def register(request): # fin flow
+def register(request):
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
